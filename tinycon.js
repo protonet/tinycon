@@ -4,6 +4,8 @@
  * Copyright (c) 2012 Tom Moor
  * MIT Licensed
  * @version 0.5
+ *
+ * Forked by Christopher Blum: https://github.com/protonet/tinycon
 */
 
 (function(){
