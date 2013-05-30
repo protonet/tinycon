@@ -41,6 +41,10 @@
 		mozilla: ua('mozilla') && !ua('chrome') && !ua('safari')
 	};
 
+	var useFallback = function() {
+		return browser.ie || browser.safari || options.fallback === 'force' || !getCanvas().getContext;
+	};
+
 	// private methods
 	var getFaviconTag = function(){
 
@@ -56,7 +60,6 @@
 	};
 
 	var removeFaviconTag = function(){
-
 		var links = document.getElementsByTagName('link');
 		var head = document.getElementsByTagName('head')[0];
 
@@ -69,7 +72,6 @@
 	};
 
 	var getCurrentFavicon = function(){
-
 		if (!originalFavicon || !currentFavicon) {
 			var tag = getFaviconTag();
 			originalFavicon = currentFavicon = tag ? tag.getAttribute('href') : '/favicon.ico';
@@ -104,9 +106,7 @@
 	};
 
 	var drawFavicon = function(label, colour) {
-
-		// fallback to updating the browser title if unsupported
-		if (!getCanvas().getContext || browser.ie || browser.safari || options.fallback === 'force') {
+		if (useFallback()) {
 			return updateTitle(label);
 		}
 
@@ -252,6 +252,10 @@
 	};
 
 	Tinycon.reset = function(){
+		if (useFallback()) {
+			return updateTitle("");
+		}
+		
 		setFaviconTag(originalFavicon);
 	};
 
