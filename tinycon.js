@@ -88,6 +88,23 @@
 			canvas = document.createElement("canvas");
 			canvas.width = 16;
 			canvas.height = 16;
+			
+			var context = canvas.getContext("2d");
+			
+			var devicePixelRatio = window.devicePixelRatio || 1;
+			var backingStorePixelRatio = context.backingStorePixelRatio
+				|| context.webkitBackingStorePixelRatio
+				|| context.mozBackingStorePixelRatio
+				|| context.msBackingStorePixelRatio
+				|| 1;
+
+			var ratio = devicePixelRatio / backingStorePixelRatio;
+
+			if (devicePixelRatio !== backingStorePixelRatio) {
+				canvas.width = canvas.width * ratio;
+				canvas.height = canvas.height * ratio;
+				context.scale(ratio, ratio);
+			}
 		}
 
 		return canvas;
