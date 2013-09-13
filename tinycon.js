@@ -120,10 +120,6 @@
 		document.getElementsByTagName('head')[0].appendChild(link);
 	};
 
-	var log = function(message){
-		if (window.console) window.console.log(message);
-	};
-
 	var drawFavicon = function(label, colour) {
 		if (useFallback()) {
 			return updateTitle(label);
