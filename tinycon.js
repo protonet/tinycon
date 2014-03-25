@@ -16,6 +16,7 @@
 	var originalTitle = document.title;
 	var faviconImage = null;
 	var canvas = null;
+	var cancelled = false;
 	var options = {};
 	var defaults = {
 		width: 7,
@@ -125,13 +126,17 @@
 			return updateTitle(label);
 		}
 
+		cancelled = false;
+
 		var context = getCanvas().getContext("2d");
 		var colour = colour || '#000000';
 		var src = getCurrentFavicon();
 
 		faviconImage = new Image();
 		faviconImage.onload = function() {
-
+			if (cancelled) {
+				return;
+			}
 			// clear canvas
 			context.clearRect(0, 0, 16, 16);
 
@@ -270,7 +275,7 @@
 		if (useFallback()) {
 			return updateTitle("");
 		}
-		
+		cancelled = true;
 		setFaviconTag(originalFavicon);
 	};
 
